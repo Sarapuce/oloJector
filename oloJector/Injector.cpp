@@ -38,7 +38,7 @@ void Injector::inject()
 		exit(1);
 	}
 
-	LPVOID addr = (LPVOID)GetProcAddress(hkernel32, "LoadLibraryA");
+	LPVOID loadLibrairyaddr = (LPVOID)GetProcAddress(hkernel32, "LoadLibraryA");
 	LPVOID distantDllName = (LPVOID)VirtualAllocEx(m_process, NULL, strlen(m_dll->getPath()), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 	if (!distantDllName)
 	{
@@ -52,5 +52,23 @@ void Injector::inject()
 									 strlen(m_dll->getPath()), 
 									 NULL);
 
-	printf("Pointeur : %p", distantDllName);
+	printf("Pointeur : %p\n", distantDllName);
+
+	HANDLE threadID = CreateRemoteThread(
+		m_process, 
+		NULL, 
+		0, 
+		(LPTHREAD_START_ROUTINE)loadLibrairyaddr, 
+		distantDllName, 
+		NULL, 
+		NULL);
+
+	if (!threadID)
+	{
+		std::cout << "Impossible to start a thread in the selected process";
+		exit(1);
+	}
+
+	CloseHandle(m_process);
+	CloseHandle(threadID);
 }
