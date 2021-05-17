@@ -12,4 +12,6 @@ int main()
     lp->refreshProcess();
     lp->printList();
     injector->setDll();
+    injector->loadProcess();
+    injector->inject();
 }

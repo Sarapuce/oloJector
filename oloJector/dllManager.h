@@ -8,12 +8,12 @@ class dllManager
 {
 public:
 	dllManager();
-	void setPath(const TCHAR* path);
+	void setPath(const char* path);
 	void print();
-	TCHAR* getPath();
+	char* getPath();
 
 private:
-	TCHAR m_path[MAX_PATH];
+	char m_path[MAX_PATH];
 	bool m_is64;
 	size_t m_length;
 };

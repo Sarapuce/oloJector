@@ -2,24 +2,24 @@
 
 dllManager::dllManager()
 {
-	_tcscpy_s(m_path, 1, _T(""));
+	strcpy_s(m_path, "");
 	m_is64 = false;
 	m_length = 0;
 }
 
-TCHAR* dllManager::getPath()
+char* dllManager::getPath()
 {
 	return m_path;
 }
 
-void dllManager::setPath(const TCHAR* path)
+void dllManager::setPath(const char* path)
 {
 	char buffer[512];
 
 	const char x86[] = { 0x02, 0x02, 0x64, 0x86, 0x00 };
 	const char x64[] = { 0x02, 0x02, 0x4c, 0x01, 0x00 };
 	
-	_tcscpy_s(m_path, MAX_PATH, path);
+	strcpy_s(m_path, path);
 
 	std::ifstream dll_file(m_path, std::ios::binary);
 
@@ -74,5 +74,5 @@ void dllManager::print()
 	else
 		_tcscpy_s(arch, 4, TEXT("x86"));
 
-	wprintf(TEXT("\nDll loaded : %s\nArchitecture : %s"), m_path, arch);
+	printf("\nDll loaded : %s\nArchitecture : %ws\n", m_path, arch);
 }

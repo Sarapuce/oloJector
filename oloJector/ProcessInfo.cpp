@@ -10,8 +10,8 @@ ProcessInfo::ProcessInfo()
 ProcessInfo::ProcessInfo(DWORD pid)
 {
 	m_pid = pid;
-	_tcscpy_s(m_name, MAX_PATH, _T("<unknow>"));
-    m_is64 = false;
+    getProcessName();
+    getis64();
 }
 
 ProcessInfo::ProcessInfo(DWORD pid, const TCHAR* name)
