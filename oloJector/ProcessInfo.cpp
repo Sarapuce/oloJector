@@ -46,9 +46,7 @@ void ProcessInfo::printInfo()
 void ProcessInfo::printInfo(bool is64)
 {
     TCHAR arch[4];
-    if (m_is64) // Probably lucky that this this working
-        _tcscpy_s(arch, 4, TEXT("x86"));
-    else if (is64)
+    if (m_is64)
         _tcscpy_s(arch, 4, TEXT("x64"));
     else
         _tcscpy_s(arch, 4, TEXT("x86"));
@@ -90,7 +88,7 @@ void ProcessInfo::setis64()
 
             }
         }
-        m_is64 = bIsWow64;
+        m_is64 = !bIsWow64;
     }
     CloseHandle(processHandle);
 }

@@ -16,8 +16,6 @@ void Injector::setDll()
 
 void Injector::loadProcess()
 {
-	char processName[128];
-
 	std::cout << "Target PID ? : ";
 	std::cin >> m_pid;
 	m_process = OpenProcess(PROCESS_ALL_ACCESS, false, m_pid);
@@ -34,9 +32,9 @@ void Injector::inject()
 	ProcessInfo pinfo(m_pid);
 	pinfo.setis64();
 
-	if (!pinfo.getis64() ^ m_dll->getArch())
+	if (pinfo.getis64() ^ m_dll->getArch())
 	{
-		std::cout << "Architecture mismatch : Process : " << !pinfo.getis64() << " dll : " << m_dll->getArch();
+		std::cout << "Architecture mismatch : Process : " << pinfo.getis64() << " | dll : " << m_dll->getArch();
 		exit(1);
 	}
 
