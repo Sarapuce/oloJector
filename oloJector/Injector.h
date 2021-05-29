@@ -2,6 +2,7 @@
 #include "dllManager.h"
 #include <tchar.h>
 #include <Windows.h>
+#include "ProcessInfo.h"
 
 class Injector
 {

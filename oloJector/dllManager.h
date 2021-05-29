@@ -11,6 +11,7 @@ public:
 	void setPath(const char* path);
 	void print();
 	char* getPath();
+	bool getArch();
 
 private:
 	char m_path[MAX_PATH];
