@@ -14,10 +14,9 @@ void Injector::setDll()
 	m_dll->print();
 }
 
-void Injector::loadProcess()
+void Injector::loadProcess(int pid)
 {
-	std::cout << "Target PID ? : ";
-	std::cin >> m_pid;
+    m_pid = pid;
 	m_process = OpenProcess(PROCESS_ALL_ACCESS, false, m_pid);
 	if (!m_process)
 	{

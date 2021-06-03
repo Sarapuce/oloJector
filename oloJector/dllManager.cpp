@@ -16,7 +16,7 @@ void dllManager::setPath(const char* path)
 {
 	char buffer[512];
 
-	const char x64[] = { 0x02, 0x02, 0x64, 0x86, 0x00 };
+    const char x64[] = { 0x02, 0x02, 0x64, static_cast<char>(0x86), 0x00 };
 	const char x86[] = { 0x02, 0x02, 0x4c, 0x01, 0x00 };
 	
 	strcpy_s(m_path, path);

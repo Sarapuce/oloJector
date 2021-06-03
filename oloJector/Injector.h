@@ -9,7 +9,7 @@ class Injector
 public:
 	Injector();
 	void setDll();
-	void loadProcess();
+    void loadProcess(int pid);
 	void inject();
 
 private:
