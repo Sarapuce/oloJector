@@ -8,13 +8,13 @@ class ProcessList
 {
 public:
 	ProcessList();
-	bool refreshProcess();
+    bool refreshProcessList();
 	void printList();
-	void setis64();
+    void setSystemArch();
 
 private:
-	unsigned int m_nbOfProcess;
+    UINT m_nbOfProcess;
 	ProcessInfo m_processes[1024];
-    bool m_platformArch;
+    bool m_systemArch;
 };
 

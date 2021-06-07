@@ -3,10 +3,10 @@
 ProcessList::ProcessList()
 {
     m_nbOfProcess = 0;
-    setis64();
+    setSystemArch();
 }
 
-bool ProcessList::refreshProcess()
+bool ProcessList::refreshProcessList()
 {
     HANDLE hProcessSnap;
     PROCESSENTRY32 pe32;
@@ -16,7 +16,7 @@ bool ProcessList::refreshProcess()
     hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (hProcessSnap == INVALID_HANDLE_VALUE)
     {
-        std::wcout << TEXT("CreateToolhelp32Snapshot failed\n");
+        qDebug() << "CreateToolhelp32Snapshot failed";
         exit(1);
     }
 
@@ -24,15 +24,14 @@ bool ProcessList::refreshProcess()
 
     if (!Process32First(hProcessSnap, &pe32))
     {
-        std::wcout << TEXT("Process32First failed\n");
+        qDebug() << "Process32First failed";
         CloseHandle(hProcessSnap);
         exit(1);
     }
 
     do
     {
-        ProcessInfo p(pe32.th32ProcessID);
-        p.setis64();
+        ProcessInfo p(pe32.th32ProcessID, QString::fromWCharArray(pe32.szExeFile));
         m_processes[m_nbOfProcess] = p;
         m_nbOfProcess++;
     } while (Process32Next(hProcessSnap, &pe32) && m_nbOfProcess < 1024);
@@ -44,16 +43,16 @@ bool ProcessList::refreshProcess()
 
 void ProcessList::printList()
 {
-    wprintf(TEXT("Architecture : %d\n"), m_platformArch);
+    qDebug() << "System arch : " << m_systemArch << m_nbOfProcess;
     
     for (unsigned int i = 0; i < m_nbOfProcess; i++)
         m_processes[i].printInfo();
 }
 
-void ProcessList::setis64()
+void ProcessList::setSystemArch()
 {
     SYSTEM_INFO si; 
     GetNativeSystemInfo(&si);
 
-    m_platformArch = !(si.wProcessorArchitecture == 0);
+    m_systemArch = !(si.wProcessorArchitecture == 0);
 }

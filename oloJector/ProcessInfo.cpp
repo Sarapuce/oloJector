@@ -11,7 +11,14 @@ ProcessInfo::ProcessInfo(DWORD pid)
 {
     m_pid = pid;
     setProcessName();
-    getis64();
+    setis64();
+}
+
+ProcessInfo::ProcessInfo(DWORD pid, QString name)
+{
+    m_pid = pid;
+    m_name = name;
+    setis64();
 }
 
 void ProcessInfo::setProcessName()
@@ -32,7 +39,7 @@ void ProcessInfo::printInfo()
     else
         arch = "x86";
 
-    qDebug() << m_name << "|" << m_pid << "|" << arch;
+    qDebug() << m_name.leftJustified(50, ' ') << "|" << m_pid << "|" << arch;
 }
 
 bool ProcessInfo::isUnknow()

@@ -10,9 +10,10 @@
 
 int main(int argc, char *argv[])
 {
-    std::cout << "oloJector v0.0.1\n";
-    ProcessInfo pi(3404);
-    pi.printInfo();
+    qDebug() << "oloJector v0.0.1";
+    ProcessList* l = new ProcessList();
+    l->refreshProcessList();
+    l->printList();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

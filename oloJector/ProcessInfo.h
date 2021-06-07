@@ -12,6 +12,7 @@ class ProcessInfo
 public:
 	ProcessInfo();
     ProcessInfo(DWORD pid);
+    ProcessInfo(DWORD pid, QString name);
 
     void setProcessName();
     void printInfo();
@@ -19,7 +20,6 @@ public:
 	bool isUnknow();
 	bool getis64();
     void setis64();
-    void setName();
 
 private:
     QString m_name;
