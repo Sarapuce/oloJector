@@ -17,7 +17,7 @@ bool ProcessList::refreshProcess()
     if (hProcessSnap == INVALID_HANDLE_VALUE)
     {
         std::wcout << TEXT("CreateToolhelp32Snapshot failed\n");
-        return false;
+        exit(1);
     }
 
     pe32.dwSize = sizeof(PROCESSENTRY32);
@@ -26,12 +26,12 @@ bool ProcessList::refreshProcess()
     {
         std::wcout << TEXT("Process32First failed\n");
         CloseHandle(hProcessSnap);
-        return false;
+        exit(1);
     }
 
     do
     {
-        ProcessInfo p(pe32.th32ProcessID, pe32.szExeFile);
+        ProcessInfo p(pe32.th32ProcessID);
         p.setis64();
         m_processes[m_nbOfProcess] = p;
         m_nbOfProcess++;
@@ -44,10 +44,10 @@ bool ProcessList::refreshProcess()
 
 void ProcessList::printList()
 {
-    wprintf(TEXT("Architecture : %d\n"), m_is64);
+    wprintf(TEXT("Architecture : %d\n"), m_platformArch);
     
     for (unsigned int i = 0; i < m_nbOfProcess; i++)
-        m_processes[i].printInfo(m_is64);
+        m_processes[i].printInfo();
 }
 
 void ProcessList::setis64()
@@ -55,5 +55,5 @@ void ProcessList::setis64()
     SYSTEM_INFO si; 
     GetNativeSystemInfo(&si);
 
-    m_is64 = !(si.wProcessorArchitecture == 0);
+    m_platformArch = !(si.wProcessorArchitecture == 0);
 }

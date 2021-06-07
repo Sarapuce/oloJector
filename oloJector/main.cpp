@@ -10,10 +10,9 @@
 
 int main(int argc, char *argv[])
 {
-    std::cout << "AstraPfizer1!\n";
-    ProcessList* lp = new ProcessList();
-    lp->refreshProcess();
-    lp->printList();
+    std::cout << "oloJector v0.0.1\n";
+    ProcessInfo pi(3404);
+    pi.printInfo();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

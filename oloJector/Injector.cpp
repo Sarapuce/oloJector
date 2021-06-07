@@ -1,4 +1,4 @@
-#include "injector.h"
+#include "Injector.h"
 #include <Psapi.h>
 
 Injector::Injector()
@@ -58,6 +58,12 @@ void Injector::inject()
 									 strlen(m_dll->getPath()), 
 									 NULL);
 
+    if(!nbBytes)
+    {
+        std::cout << "WriteProssMemory failed";
+        exit(1);
+    }
+
 	printf("Pointeur : %p\n", distantDllName);
 
 	HANDLE threadID = CreateRemoteThread(
@@ -67,7 +73,7 @@ void Injector::inject()
 		(LPTHREAD_START_ROUTINE)loadLibrairyaddr, 
 		distantDllName, 
 		NULL, 
-		NULL);
+        NULL);
 
 	if (!threadID)
 	{

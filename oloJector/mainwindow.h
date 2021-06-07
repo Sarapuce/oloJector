@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtDebug>
 
+#include "Injector.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -24,5 +26,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     int m_pid;
+    Injector* m_injector;
 };
 #endif // MAINWINDOW_H

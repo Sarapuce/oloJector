@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include "ProcessInfo.h"
 #include "ProcessList.h"
-#include "Injector.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     m_pid = 0;
+    m_injector = new Injector();
 }
 
 MainWindow::~MainWindow()
@@ -22,10 +23,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    Injector* injector = new Injector();
-    injector->setDll();
-    injector->loadProcess(m_pid);
-    injector->inject();
+    m_injector->setDll();
+    m_injector->loadProcess(m_pid);
+    m_injector->inject();
 }
 
 void MainWindow::on_spinBox_valueChanged(int arg1)

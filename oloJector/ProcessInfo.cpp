@@ -3,60 +3,41 @@
 ProcessInfo::ProcessInfo()
 {
 	m_pid = 0;
-	_tcscpy_s(m_name, MAX_PATH, _T("<unknow>"));
+    m_name = "<unknow>";
     m_is64 = false;
 }
 
 ProcessInfo::ProcessInfo(DWORD pid)
 {
-	m_pid = pid;
-    getProcessName();
+    m_pid = pid;
+    setProcessName();
     getis64();
 }
 
-ProcessInfo::ProcessInfo(DWORD pid, const TCHAR* name)
+void ProcessInfo::setProcessName()
 {
-    m_pid = pid;
-    _tcscpy_s(m_name, MAX_PATH, name);
-    m_is64 = false;
-}
-
-int ProcessInfo::getProcessName()
-{
-	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, m_pid);
-    if (NULL != hProcess)
-    {
-        HMODULE hMod;
-        DWORD cbNeeded;
-
-        if (EnumProcessModulesEx(hProcess, &hMod, sizeof(hMod), &cbNeeded, LIST_MODULES_ALL))
-        {
-            GetModuleBaseName(hProcess, hMod, m_name, sizeof(m_name) / sizeof(TCHAR));
-        }
-        return 0;
-    }
-    return 1;
+    TCHAR name[MAX_PATH];
+    HANDLE processHandle = OpenProcess(PROCESS_ALL_ACCESS, TRUE, m_pid);
+    GetProcessImageFileName(processHandle, name, MAX_PATH);
+    m_name = QString::fromWCharArray(name);
+    m_name = m_name.section("\\", -1);
 }
 
 void ProcessInfo::printInfo()
 {
-    wprintf(TEXT("%-50s | PID : %u\n"), m_name, m_pid);
-}
+    QString arch;
 
-void ProcessInfo::printInfo(bool is64)
-{
-    TCHAR arch[4];
     if (m_is64)
-        _tcscpy_s(arch, 4, TEXT("x64"));
+        arch = "x64";
     else
-        _tcscpy_s(arch, 4, TEXT("x86"));
+        arch = "x86";
 
-    wprintf(TEXT("%-50s | PID : %-6u | Architecture : %s\n"), m_name, m_pid, arch);
+    qDebug() << m_name << "|" << m_pid << "|" << arch;
 }
 
 bool ProcessInfo::isUnknow()
 {
-    return wcscmp(m_name, _T("<unknow>")) == 0;
+    return m_name == "<unknow>";
 }
 
 void ProcessInfo::setPid(DWORD pid)

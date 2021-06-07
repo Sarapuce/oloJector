@@ -15,6 +15,6 @@ public:
 private:
 	unsigned int m_nbOfProcess;
 	ProcessInfo m_processes[1024];
-	bool m_is64;
+    bool m_platformArch;
 };
 
