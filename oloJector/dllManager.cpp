@@ -51,10 +51,6 @@ void dllManager::loadDll(QString path)
         qDebug() << "Not a valid dll";
         exit(1);
     }
-
-
-
-
 }
 
 void dllManager::print()

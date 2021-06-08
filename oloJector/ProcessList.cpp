@@ -56,3 +56,13 @@ void ProcessList::setSystemArch()
 
     m_systemArch = !(si.wProcessorArchitecture == 0);
 }
+
+ProcessInfo* ProcessList::getProcesses()
+{
+    return m_processes;
+}
+
+UINT ProcessList::getNbOfProcess()
+{
+    return m_nbOfProcess;
+}

@@ -80,3 +80,13 @@ void ProcessInfo::setis64()
     }
     CloseHandle(processHandle);
 }
+
+QString ProcessInfo::getName()
+{
+    return m_name;
+}
+
+DWORD ProcessInfo::getPID()
+{
+    return m_pid;
+}

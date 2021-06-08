@@ -11,6 +11,8 @@ public:
     bool refreshProcessList();
 	void printList();
     void setSystemArch();
+    ProcessInfo* getProcesses();
+    UINT getNbOfProcess();
 
 private:
     UINT m_nbOfProcess;

@@ -20,6 +20,8 @@ public:
 	bool isUnknow();
 	bool getis64();
     void setis64();
+    QString getName();
+    DWORD getPID();
 
 private:
     QString m_name;

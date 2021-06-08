@@ -15,11 +15,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_pid = 0;
     m_injector = new Injector();
+    m_processList = new ProcessList();
+    refreshComboBox();
 }
 
 MainWindow::~MainWindow()
 {
+    delete m_injector;
     delete ui;
+}
+
+void MainWindow::refreshComboBox()
+{
+    ui->comboBox->clear();
+    m_processList->refreshProcessList();
+    ProcessInfo* p = m_processList->getProcesses();
+    for(unsigned int i = 0; i < m_processList->getNbOfProcess(); i++)
+    {
+        ui->comboBox->addItem(p[i].getName());
+    }
+
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -39,4 +54,11 @@ void MainWindow::on_pushButton_2_clicked()
 {
     QString path = QFileDialog::getOpenFileName(this, "Open a file", "File to inject", "Dynamic Link Library (*.dll);;All Files (*)");
     qDebug() << "Selected file : " << path;
+}
+
+void MainWindow::on_comboBox_activated(int index)
+{
+    qDebug() << "Activated : " << index;
+    m_pid = m_processList->getProcesses()[index].getPID();
+    ui->spinBox->setValue(m_pid);
 }

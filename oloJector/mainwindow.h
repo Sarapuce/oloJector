@@ -5,6 +5,7 @@
 #include <QtDebug>
 
 #include "Injector.h"
+#include "ProcessList.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void refreshComboBox();
 
 private slots:
     void on_pushButton_clicked();
@@ -25,9 +27,12 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_comboBox_activated(int index);
+
 private:
     Ui::MainWindow *ui;
     int m_pid;
     Injector* m_injector;
+    ProcessList* m_processList;
 };
 #endif // MAINWINDOW_H
