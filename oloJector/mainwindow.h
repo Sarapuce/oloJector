@@ -23,6 +23,8 @@ private slots:
 
     void on_spinBox_valueChanged(int arg1);
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     int m_pid;

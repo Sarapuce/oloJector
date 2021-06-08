@@ -2,79 +2,70 @@
 
 dllManager::dllManager()
 {
-	strcpy_s(m_path, "");
+    m_path = "";
 	m_is64 = false;
 	m_length = 0;
 }
 
-char* dllManager::getPath()
+QString dllManager::getPath()
 {
-	return m_path;
+    return m_path;
 }
 
-void dllManager::setPath(const char* path)
+void dllManager::setPath(QString path)
 {
-	char buffer[512];
+    m_path = path;
+}
 
-    const char x64[] = { 0x02, 0x02, 0x64, static_cast<char>(0x86), 0x00 };
-	const char x86[] = { 0x02, 0x02, 0x4c, 0x01, 0x00 };
-	
-	strcpy_s(m_path, path);
+void dllManager::loadDll(QString path)
+{
 
-	std::ifstream dll_file(m_path, std::ios::binary);
+    QByteArray x64 = "\x64\x86";
+    QByteArray x86 = "\x4c\x01";
+    QByteArray buffer;
 
-	if (!dll_file)
-	{
-		std::cout << "Impossible d'ouvrir le fichier\n";
-		return;
-	}
+    setPath(path);
+    QFile file(m_path);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Impossible to open : " << m_path;
+        exit(1);
+    }
 
-	dll_file.seekg(0, std::ios::end);
-	m_length = (size_t)dll_file.tellg();
-	dll_file.seekg(0, std::ios::beg);
+    buffer = file.read(512);
 
-	if (!(dll_file.read(buffer, sizeof(buffer))))
-	{
-		std::cout << dll_file.eof();
-		std::cout << "Impossible de lire le fichier";
-		return;
-	}
+    if(buffer.contains(x86))
+    {
+        m_is64 = false;
+        qDebug() << "dll arch : x86";
+    }
 
-	for (unsigned int i = 0; i < 511; i++)
-	{
-		if (buffer[i] == 0) 
-		{
-			buffer[i] = 2;
-		}
-	}
-	buffer[511] = 0;
+    else if(buffer.contains(x64))
+    {
+        m_is64 = true;
+        qDebug() << "dll arch : x64";
+    }
 
-	dll_file.close();
+    else
+    {
+        qDebug() << "Not a valid dll";
+        exit(1);
+    }
 
-	if (strstr(buffer, x86))
-	{
-		m_is64 = false;
-		return;
-	}
-	
-	if (strstr(buffer, x64))
-	{
-		m_is64 = true;
-		return;
-	}
 
-	std::cout << "Not a valid dll";
+
+
 }
 
 void dllManager::print()
 {
-	TCHAR arch[4];
+    QString arch;
 	if (m_is64)
-		_tcscpy_s(arch, 4, TEXT("x64"));
+        arch = "x64";
 	else
-		_tcscpy_s(arch, 4, TEXT("x86"));
+        arch = "x86";
 
-	printf("\nDll loaded : %s\nArchitecture : %ws\n", m_path, arch);
+    qDebug() << "Dll loaded : " << m_path << "Arch : " << arch;
 }
 
 bool dllManager::getArch()

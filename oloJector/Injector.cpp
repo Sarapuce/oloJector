@@ -45,7 +45,7 @@ void Injector::inject()
 	}
 
 	LPVOID loadLibrairyaddr = (LPVOID)GetProcAddress(hkernel32, "LoadLibraryA");
-	LPVOID distantDllName = (LPVOID)VirtualAllocEx(m_process, NULL, strlen(m_dll->getPath()), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+    LPVOID distantDllName = (LPVOID)VirtualAllocEx(m_process, NULL, m_dll->getPath().length(), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 	if (!distantDllName)
 	{
 		std::cout << "Impossible de allocate memory in target";
@@ -54,8 +54,8 @@ void Injector::inject()
 
 	int nbBytes = WriteProcessMemory(m_process, 
 									 distantDllName, 
-									 m_dll->getPath(), 
-									 strlen(m_dll->getPath()), 
+                                     m_dll->getPath().toLocal8Bit().data(),
+                                     m_dll->getPath().length(),
 									 NULL);
 
     if(!nbBytes)

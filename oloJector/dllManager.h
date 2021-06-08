@@ -3,18 +3,22 @@
 #include <Windows.h>
 #include <fstream>
 #include <iostream>
+#include <QString>
+#include <QtDebug>
+#include <QFile>
 
 class dllManager
 {
 public:
 	dllManager();
-	void setPath(const char* path);
+    void setPath(QString path);
 	void print();
-	char* getPath();
+    QString getPath();
 	bool getArch();
+    void loadDll(QString path);
 
 private:
-	char m_path[MAX_PATH];
+    QString m_path;
 	bool m_is64;
 	size_t m_length;
 };
