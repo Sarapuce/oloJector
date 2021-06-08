@@ -8,7 +8,7 @@ class Injector
 {
 public:
 	Injector();
-	void setDll();
+    void setDll(QString path);
     void loadProcess(int pid);
 	void inject();
 

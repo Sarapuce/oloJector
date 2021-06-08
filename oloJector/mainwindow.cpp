@@ -39,7 +39,6 @@ void MainWindow::refreshComboBox()
 
 void MainWindow::on_pushButton_clicked()
 {
-    m_injector->setDll();
     m_injector->loadProcess(m_pid);
     m_injector->inject();
 }
@@ -53,7 +52,9 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
 void MainWindow::on_pushButton_2_clicked()
 {
     QString path = QFileDialog::getOpenFileName(this, "Open a file", "File to inject", "Dynamic Link Library (*.dll);;All Files (*)");
+    path = path.replace("/", "\\");
     qDebug() << "Selected file :" << path;
+    m_injector->setDll(path);
 }
 
 void MainWindow::on_comboBox_activated(int index)

@@ -12,11 +12,6 @@ QString dllManager::getPath()
     return m_path;
 }
 
-void dllManager::setPath(QString path)
-{
-    m_path = path;
-}
-
 void dllManager::loadDll(QString path)
 {
 
@@ -24,7 +19,7 @@ void dllManager::loadDll(QString path)
     QByteArray x86 = "\x4c\x01";
     QByteArray buffer;
 
-    setPath(path);
+    m_path = path;
     QFile file(m_path);
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -61,7 +56,7 @@ void dllManager::print()
 	else
         arch = "x86";
 
-    qDebug() << "Dll loaded :" << m_path << "| Arch : " << arch;
+    qDebug() << "Dll loaded :" << m_path << "| Arch :" << arch;
 }
 
 bool dllManager::getArch()

@@ -8,9 +8,9 @@ Injector::Injector()
 	m_process = NULL;
 }
 
-void Injector::setDll()
+void Injector::setDll(QString path)
 {
-	m_dll->setPath("C:\\main.dll");
+    m_dll->loadDll(path);
 	m_dll->print();
 }
 

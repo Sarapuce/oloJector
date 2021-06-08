@@ -10,8 +10,7 @@
 class dllManager
 {
 public:
-	dllManager();
-    void setPath(QString path);
+    dllManager();
 	void print();
     QString getPath();
 	bool getArch();
