@@ -28,7 +28,7 @@ void dllManager::loadDll(QString path)
     QFile file(m_path);
     if (!file.open(QIODevice::ReadOnly))
     {
-        qDebug() << "Impossible to open : " << m_path;
+        qDebug() << "Impossible to open :" << m_path;
         exit(1);
     }
 
@@ -61,7 +61,7 @@ void dllManager::print()
 	else
         arch = "x86";
 
-    qDebug() << "Dll loaded : " << m_path << "Arch : " << arch;
+    qDebug() << "Dll loaded :" << m_path << "| Arch : " << arch;
 }
 
 bool dllManager::getArch()

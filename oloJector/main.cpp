@@ -11,9 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    qDebug() << "oloJector v0.0.1";
-    dllManager* dll = new dllManager();
-    dll->loadDll("C:\\Users\\olo76\\source\\repos\\messageBox\\x64\\Debug\\messageBox.dll");
+    qDebug() << "oloJector v1.0.1";
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

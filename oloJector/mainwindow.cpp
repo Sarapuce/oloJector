@@ -47,18 +47,18 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_spinBox_valueChanged(int arg1)
 {
     m_pid = arg1;
-    qDebug() << m_pid;
+    qDebug() << "m_pid set to :" << m_pid;
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
     QString path = QFileDialog::getOpenFileName(this, "Open a file", "File to inject", "Dynamic Link Library (*.dll);;All Files (*)");
-    qDebug() << "Selected file : " << path;
+    qDebug() << "Selected file :" << path;
 }
 
 void MainWindow::on_comboBox_activated(int index)
 {
-    qDebug() << "Activated : " << index;
+    qDebug() << "Index selected :" << index;
     m_pid = m_processList->getProcesses()[index].getPID();
     ui->spinBox->setValue(m_pid);
 }
