@@ -54,7 +54,7 @@ void MainWindow::on_pushButton_2_clicked()
     QString path = QFileDialog::getOpenFileName(this, "Open a file", "File to inject", "Dynamic Link Library (*.dll);;All Files (*)");
     path = path.replace("/", "\\");
     qDebug() << "Selected file :" << path;
-    ui->lineEdit->setText(path);
+
     m_injector->setDll(path);
 }
 
